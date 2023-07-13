@@ -17,7 +17,7 @@ PORT   STATE SERVICE VERSION
 No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
 TCP/IP fingerprint:
 ```
-So, nothing too crazy.  Scanned all the ports and looks like the only 2 open are 22 and 80.  I'm gonna
+So, nothing too crazy.  Scanned all the ports and looks like the only two open are 22 and 80.  I'm gonna
 go at 80 first.  So run this next nmap command and get:
 ```
 sudo nmap -sV -sC -p 80 10.129.42.249
