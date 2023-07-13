@@ -1,4 +1,4 @@
-###Day2
+### Day 1
 
 Got started on the knowledge check box on the getting started module in HTB.  So first things first, connected
 to the VPN for HTB and away we go.
@@ -108,7 +108,7 @@ some issues with this in the lesson too so I'll need to do more looking into tha
 But it's zzz time for me!  I'll work on this more tomorrow after I look up some other writeups for this to
 see where I may be going wrong with the file upload feature.
 
-###Day 2
+### Day 2
 
 So I think I may have been going about getting my shell in the wrong way.  Stuck, was I, on doing in through an image
 upload.  But I may also just be able to create a page and open the page. ;)
