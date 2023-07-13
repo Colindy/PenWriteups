@@ -2,26 +2,26 @@ Got started on the knowledge check box on the getting started module in HTB.  So
 to the VPN for HTB and away we go.
 
 The system gen gave me a box at 10.129.42.249.  Ran first simple nmap:
-
-	sudo nmap -p- -sV -O 10.129.42.249
-		[sudo] password for kali: 
-		Starting Nmap 7.94 ( https://nmap.org ) at 2023-07-12 20:26 EDT
-		Nmap scan report for 10.129.42.249
-		Host is up (0.095s latency).
-		Not shown: 65533 closed tcp ports (reset)
-		PORT   STATE SERVICE VERSION
-		22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
-		80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
-		No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
-		TCP/IP fingerprint:
-
+```
+sudo nmap -p- -sV -O 10.129.42.249
+[sudo] password for kali: 
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-07-12 20:26 EDT
+Nmap scan report for 10.129.42.249
+Host is up (0.095s latency).
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+```
 So, nothing too crazy.  Scanned all the ports and looks like the only 2 open are 22 and 80.  I'm gonna
 go at 80 first.  So run this next nmap command and get:
-
-	sudo nmap -sV -sC -p 80 10.129.42.249
-		Starting Nmap 7.94 ( https://nmap.org ) at 2023-07-12 20:28 EDT
-		Nmap scan report for 10.129.42.249
-		Host is up (0.037s latency).
+```
+sudo nmap -sV -sC -p 80 10.129.42.249
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-07-12 20:28 EDT
+Nmap scan report for 10.129.42.249
+Host is up (0.037s latency).
 
 		PORT   STATE SERVICE VERSION
 		80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
@@ -29,7 +29,7 @@ go at 80 first.  So run this next nmap command and get:
 		|_/admin/
 		|_http-server-header: Apache/2.4.41 (Ubuntu)
 		|_http-title: Welcome to GetSimple! - gettingstarted
-
+```
 Interesting, we have a robots.txt file.  Wonder what I'm "not supposed to see" lol.  So, open a browser and 
 take a look.
 
@@ -45,16 +45,16 @@ I click on it.  Kinda sad.  No worries.  Maybe come back to that.
 Let's see what dirb comes up with and what else is hiding on this box.  Real quick though, I doubt it works but still gotta
 see if admin:admin works for the ssh....admin is a username but neither 'admin', 'getsimple', or 'getsimple!' work.  But I did
 find something.  I got the following error:
-
+```
 	admin@10.129.42.249's password: 
 		Permission denied, please try again.
 		admin@10.129.42.249's password: 
 		Permission denied, please try again.
 		admin@10.129.42.249's password: 
 		admin@10.129.42.249: Permission denied (publickey,password).
-
+```
 Looks like I can use a key instead of a password if need be.  Ok, back to dirb...
-
+```
 	sudo dirb http://10.129.42.249 /usr/share/wordlists/dirb/small.txt 
 
 		-----------------
@@ -78,7 +78,7 @@ Looks like I can use a key instead of a password if need be.  Ok, back to dirb..
 		---- Entering directory: http://10.129.42.249/admin/ ----
 		==> DIRECTORY: http://10.129.42.249/admin/inc/                                                                                         
 		==> DIRECTORY: http://10.129.42.249/admin/template/         
-
+```
 Nothing really here, maybe I'll come back to this later.  I wonder if there are any bugs for gettingstarted
 v 3.3.15.  And there is, CVE-2019-11231.  Cool, there's a metasploit exploit for it.  Set my options for it 
 and lets see where it goes.
@@ -90,10 +90,10 @@ over to the device to see if it grabs anything interesting but wget doesn't work
 
 Nothing I tried so far works.
 	
-	Tried hosting a python web server but I can't seem to get the file to download
-	from my local machine to the target.  Keep getting connection refused for that.
+Tried hosting a python web server but I can't seem to get the file to download
+from my local machine to the target.  Keep getting connection refused for that.
 
-	Tried poking around in meterpreter but didn't find anything.
+Tried poking around in meterpreter but didn't find anything.
 
 I've got an idea, we know it hosts ssh, let's give hydra a try and see if we can brute force the root login
 and get somewhere...nothing.
