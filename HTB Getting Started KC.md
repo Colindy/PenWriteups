@@ -1,3 +1,5 @@
+###Day2
+
 Got started on the knowledge check box on the getting started module in HTB.  So first things first, connected
 to the VPN for HTB and away we go.
 
