@@ -23,12 +23,12 @@ Starting Nmap 7.94 ( https://nmap.org ) at 2023-07-12 20:28 EDT
 Nmap scan report for 10.129.42.249
 Host is up (0.037s latency).
 
-		PORT   STATE SERVICE VERSION
-		80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
-		| http-robots.txt: 1 disallowed entry 
-		|_/admin/
-		|_http-server-header: Apache/2.4.41 (Ubuntu)
-		|_http-title: Welcome to GetSimple! - gettingstarted
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+| http-robots.txt: 1 disallowed entry 
+|_/admin/
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Welcome to GetSimple! - gettingstarted
 ```
 Interesting, we have a robots.txt file.  Wonder what I'm "not supposed to see" lol.  So, open a browser and 
 take a look.
@@ -46,38 +46,38 @@ Let's see what dirb comes up with and what else is hiding on this box.  Real qui
 see if admin:admin works for the ssh....admin is a username but neither 'admin', 'getsimple', or 'getsimple!' work.  But I did
 find something.  I got the following error:
 ```
-	admin@10.129.42.249's password: 
-		Permission denied, please try again.
-		admin@10.129.42.249's password: 
-		Permission denied, please try again.
-		admin@10.129.42.249's password: 
-		admin@10.129.42.249: Permission denied (publickey,password).
+admin@10.129.42.249's password: 
+Permission denied, please try again.
+admin@10.129.42.249's password: 
+Permission denied, please try again.
+admin@10.129.42.249's password: 
+admin@10.129.42.249: Permission denied (publickey,password).
 ```
 Looks like I can use a key instead of a password if need be.  Ok, back to dirb...
 ```
-	sudo dirb http://10.129.42.249 /usr/share/wordlists/dirb/small.txt 
+sudo dirb http://10.129.42.249 /usr/share/wordlists/dirb/small.txt 
 
-		-----------------
-		DIRB v2.22    
-		By The Dark Raver
-		-----------------
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
 
-		START_TIME: Wed Jul 12 20:53:53 2023
-		URL_BASE: http://10.129.42.249/
-		WORDLIST_FILES: /usr/share/wordlists/dirb/small.txt
+START_TIME: Wed Jul 12 20:53:53 2023
+URL_BASE: http://10.129.42.249/
+WORDLIST_FILES: /usr/share/wordlists/dirb/small.txt
 
-		-----------------
+-----------------
 
-		GENERATED WORDS: 959                                                           
+GENERATED WORDS: 959                                                           
 
-		---- Scanning URL: http://10.129.42.249/ ----
-		==> DIRECTORY: http://10.129.42.249/admin/                                                                                             
-		==> DIRECTORY: http://10.129.42.249/backups/                                                                                           
-		==> DIRECTORY: http://10.129.42.249/data/                                                                                              
+---- Scanning URL: http://10.129.42.249/ ----
+==> DIRECTORY: http://10.129.42.249/admin/                                                                                             
+==> DIRECTORY: http://10.129.42.249/backups/                                                                                           
+==> DIRECTORY: http://10.129.42.249/data/                                                                                              
                                                                                                                                        
-		---- Entering directory: http://10.129.42.249/admin/ ----
-		==> DIRECTORY: http://10.129.42.249/admin/inc/                                                                                         
-		==> DIRECTORY: http://10.129.42.249/admin/template/         
+---- Entering directory: http://10.129.42.249/admin/ ----
+==> DIRECTORY: http://10.129.42.249/admin/inc/                                                                                         
+==> DIRECTORY: http://10.129.42.249/admin/template/         
 ```
 Nothing really here, maybe I'll come back to this later.  I wonder if there are any bugs for gettingstarted
 v 3.3.15.  And there is, CVE-2019-11231.  Cool, there's a metasploit exploit for it.  Set my options for it 
@@ -106,3 +106,7 @@ some issues with this in the lesson too so I'll need to do more looking into tha
 But it's zzz time for me!  I'll work on this more tomorrow after I look up some other writeups for this to
 see where I may be going wrong with the file upload feature.
 
+###Day 2
+
+So I think I may have been going about getting my shell in the wrong way.  Stuck, was I, on doing in through an image
+upload.  But I may also just be able to create a page and open the page. ;)
