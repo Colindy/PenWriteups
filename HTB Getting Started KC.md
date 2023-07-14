@@ -127,13 +127,13 @@ Of the two, I already used the first one to get the first flag, let's see what w
 
 First things first, let's get this exploit set up and going.
 
-![Settings for exploit](/blob/main/Images/metasploit_setting.PNG)
+![Settings for exploit](/tree/main/Images/metasploit_setting.PNG)
 
 And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
 
 `sudo -l
 
-![results from sudo -l](/blob/main/Images/sudoL.png)
+![results from sudo -l](/tree/main/Images/sudoL.PNG)
 
 Well lookie lookie, seems I have found a sudo command that doesn't require sudo password.  PHP.  Go check out
 GTFObins github and find the following command for PHP sudo:
@@ -142,8 +142,8 @@ CMD="/bin/sh"
 sudo php -r "system('$CMD');"
 ```
 
-![Nevermind the typo lines :P](/Images/rootshell.png)
+![Nevermind the typo lines :P](/Images/rootshell.PNG)
 
 And now I control ROOOOOOOOOOT!!!!!  That's how we roll.  Finish it up with some cmd lines and get that flag!!
 
-![Root.txt flag](/Images/rootTXTflag.png)
+![Root.txt flag](/Images/rootTXTflag.PNG)
