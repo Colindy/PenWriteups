@@ -121,9 +121,7 @@ to the target but it wouldn't come out right.  I'm sure I'm just doing the code 
 Time to try a different path.  Break out Metasploit again and do a search for 'getsimple' and got two results
 back on that.
 
-<picture>
-	<srcset="https://github.com/Colindy/PenWriteups/blob/main/Images/Metasearch.png">
-</picture>
+![Metasploit Search](https://github.com/Colindy/PenWriteups/tree/main/Images/Metasearch.PNG)
 
 Of the two, I already used the first one to get the first flag, let's see what we can do with the second one.
 
