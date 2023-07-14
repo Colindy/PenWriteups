@@ -121,13 +121,15 @@ to the target but it wouldn't come out right.  I'm sure I'm just doing the code 
 Time to try a different path.  Break out Metasploit again and do a search for 'getsimple' and got two results
 back on that.
 
-![meta search pic](https://github.com/Colindy/PenWriteups/blob/main/Images/Metasearch.png)
+<picture>
+	<srcset="https://github.com/Colindy/PenWriteups/blob/main/Images/Metasearch.png">
+</picture>
 
 Of the two, I already used the first one to get the first flag, let's see what we can do with the second one.
 
 First things first, let's get this exploit set up and going.
 
-![Settings for exploit](/blob/main/Images/metasploit_setting.png?raw=true)
+![Settings for exploit](/blob/main/Images/metasploit_setting.PNG)
 
 And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
 
