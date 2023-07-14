@@ -125,7 +125,7 @@ back on that.
 search getsimple
 ```
 
-![Metasploit Search](/Images/Metasearch.PNG)
+![Metasploit Search](/HTB1/Images/Metasearch.PNG)
 
 Of the two, I already used the first one to get the first flag, let's see what we can do with the second one.
 
@@ -137,13 +137,13 @@ set rhosts <target ip>
 exploit
 ```
 
-![Settings for exploit](/Images/metasploit_setting.PNG)
+![Settings for exploit](/HTB1/Images/metasploit_setting.PNG)
 
 And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
 ```
 sudo -l
 ```
-![results from sudo -l](/Images/sudoL.PNG)
+![results from sudo -l](/HTB1/Images/sudoL.PNG)
 
 Well lookie lookie, seems I have found a sudo command that doesn't require sudo password.  PHP.  Go check out
 GTFObins github and find the following command for PHP sudo:
@@ -152,11 +152,11 @@ CMD="/bin/sh"
 sudo php -r "system('$CMD');"
 ```
 
-![Nevermind the typo lines :P](/Images/rootshell.PNG)
+![Nevermind the typo lines :P](/HTB1/Images/rootshell.PNG)
 
 And now I control ROOOOOOOOOOT!!!!!  That's how we roll.  Finish it up with some cmd lines and get that flag!!
 
-![Root.txt flag](/Images/rootTXTflag.PNG)
+![Root.txt flag](/HTB1/Images/rootTXTflag.PNG)
 
 Well, that was fun.  Learned a lot with this one.  Not least of all, some tricks for doing these writeups.  I
 believe I'll be doing some more of these as I go through HTB Academy and work my way towards PenTesting!
