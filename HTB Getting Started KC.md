@@ -112,3 +112,38 @@ see where I may be going wrong with the file upload feature.
 
 So I think I may have been going about getting my shell in the wrong way.  Stuck, was I, on doing in through an image
 upload.  But I may also just be able to create a page and open the page. ;)
+
+## Continued...
+
+So, tried the idea I had and either it doesn't work or I'm doing it wrong.  I kept trying to add a reverse shell
+to the target but it wouldn't come out right.  I'm sure I'm just doing the code wrong.
+
+Time to try a different path.  Break out Metasploit again and do a search for 'getsimple' and got two results
+back on that.
+
+![meta search pic](/Images/Metasearch.png)
+
+Of the two, I already used the first one to get the first flag, let's see what we can do with the second one.
+
+First things first, let's get this exploit set up and going.
+
+![Settings for exploit](/Images/metasploit_setting.png)
+
+And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
+
+`sudo -l
+
+![results from sudo -l](/Images/sudoL.png)
+
+Well lookie lookie, seems I have found a sudo command that doesn't require sudo password.  PHP.  Go check out
+GTFObins github and find the following command for PHP sudo:
+```
+CMD="/bin/sh"
+sudo php -r "system('$CMD');"
+```
+
+![Nevermind the typo lines :P](/Images/rootshell.png)
+
+And now I control ROOOOOOOOOOT!!!!!  That's how we roll.  Finish it up with some cmd lines and get that flag!!
+
+![Root.txt flag](/Images/rootTXTflag.png)
