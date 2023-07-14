@@ -127,7 +127,7 @@ Of the two, I already used the first one to get the first flag, let's see what w
 
 First things first, let's get this exploit set up and going.
 
-![Settings for exploit](/blob/main/Images/metasploit_setting.png)
+![Settings for exploit](/blob/main/Images/metasploit_setting.png?raw=true)
 
 And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
 
