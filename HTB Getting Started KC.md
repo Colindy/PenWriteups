@@ -130,9 +130,9 @@ First things first, let's get this exploit set up and going.
 ![Settings for exploit](/tree/main/Images/metasploit_setting.PNG)
 
 And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
-
-`sudo -l
-
+```
+sudo -l
+```
 ![results from sudo -l](/tree/main/Images/sudoL.PNG)
 
 Well lookie lookie, seems I have found a sudo command that doesn't require sudo password.  PHP.  Go check out
