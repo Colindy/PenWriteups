@@ -121,19 +121,19 @@ to the target but it wouldn't come out right.  I'm sure I'm just doing the code 
 Time to try a different path.  Break out Metasploit again and do a search for 'getsimple' and got two results
 back on that.
 
-![meta search pic](/Images/Metasearch.png)
+![meta search pic](https://github.com/Colindy/PenWriteups/blob/main/Images/Metasearch.png)
 
 Of the two, I already used the first one to get the first flag, let's see what we can do with the second one.
 
 First things first, let's get this exploit set up and going.
 
-![Settings for exploit](/Images/metasploit_setting.png)
+![Settings for exploit](/blob/main/Images/metasploit_setting.png)
 
 And I'm in again.  So after some poking I remember the previous lesson and checking the following command:
 
 `sudo -l
 
-![results from sudo -l](/Images/sudoL.png)
+![results from sudo -l](/blob/main/Images/sudoL.png)
 
 Well lookie lookie, seems I have found a sudo command that doesn't require sudo password.  PHP.  Go check out
 GTFObins github and find the following command for PHP sudo:
