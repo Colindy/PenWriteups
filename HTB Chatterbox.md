@@ -15,7 +15,7 @@ Looks like we've got a windows machine on our hands.  Some SMB stuff too so that
 
 And got still another answer, that was again, wrong lol.
 
-![pic3nmap](/Images/HTB2Chat/Pic3nmap.png)
+![pic3nmap](/Images/HTB2Chat/pic3nmap.png)
 
 The answer you're looking for is 2.  Those two ports are the the focus, that we will get into now.
 
