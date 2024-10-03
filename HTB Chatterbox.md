@@ -90,7 +90,7 @@ Password for [WORKGROUP\Administrator]:
 
 And that gives us our root.txt file.  Use SMB to download the file and then simply open it up and there's your flag!
 
-![pic12SMB](/Images/HTB2Chat/pic12SMB.png)
+![pic12SMB](/Images/HTB2Chat/pic12SMB.png)<br>
 ![pic13root](/Images/HTB2Chat/pic13root.png)
 
 This one was fun, a little sad that the plink path didn't work but it is what it is.  I think it may not have worked because that port was already on the outside so trying to forward something already forwarded may be an issue.  But, we got it, all good now.
