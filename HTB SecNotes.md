@@ -53,29 +53,29 @@ Ok then.  Looks like another http port.  And we see (if we didn't know already) 
 
 Fire up the browser, go check it out and upon initial visit I get a login page.  Inputs, wonder if these are vulnerable to injection of any sort.
 
-![No Account](/HTB3SecNotes/pic1.png)
+![No Account](/Images/HTB3SecNotes/pic1.png)
 
 Doesn't look like it on the login page.  Lets create an account.
 
 Create that with test username and get all logged in and looks like we have a note taking app.
 
-![App View](/HTB3SecNotes/pic2.png)
+![App View](/Images/HTB3SecNotes/pic2.png)
 
 You can also see that we have a username.  Tyler.  Let's keep that in our backpocket for now.  Let's test the account creation page for any type of injection.
 
 So, create an account named `'OR 1 OR'` and then sign in and now look what I get.
 
-![Logged in](/HTB3SecNotes/pic3.png)
+![Logged in](/Images/HTB3SecNotes/pic3.png)
 
 And if I open these notes out, looks like I get a list of years, a recipie....and, what's this....a password?
 
-![Tyler's password](/HTB3SecNotes/pic4.png)
+![Tyler's password](/Images/HTB3SecNotes/pic4.png)
 
 So far, interesting.  I think I've pretty much gotten admin on the webapp, even grabbed a password out along with a directory.
 
 Before we move on, let's check to see what port 8808 was.
 
-![Basic IIS Page](/HTB3SecNotes/pic5.png)
+![Basic IIS Page](/Images/HTB3SecNotes/pic5.png)
 
 Looks like just a basic IIS page.  Nothing too fancy.  So let's take our new found username and password and give that a go on the 445 port (SMB).
 
@@ -100,7 +100,7 @@ Looks like I'm working under the website pointed at by 8808.  And Tyler's passwo
 
 First, let's get our php written out.  Here we're going to use php system() to call nc.exe (netcat) and execute (`-e`) cmd.exe to my IP over port 4444.
 
-![php file](/HTB3SecNotes/pic6.png)
+![php file](/Images/HTB3SecNotes/pic6.png)
 
 Going to get my netcat listener started in a new terminal tab.
 
@@ -186,16 +186,16 @@ root
 
 And look at that, we're root.  In a linux subsystem.  Quick `ls -a` shows we have a bash history.  Let's give that a check.
 
-![history](/HTB3SecNotes/pic7.png)
+![history](/Images/HTB3SecNotes/pic7.png)
 
 And would you look at that, an admin password.  How nice of them to leave this in the history like that.
 
 Well now that we have that, we win.  So open a new tab and give psexec.py a go and what do we get?
 
-![Whoami](/HTB3SecNotes/pic8.png)
+![Whoami](/Images/HTB3SecNotes/pic8.png)
 
 And now we get the flag.  And another one taken down!!  That's how we do it.
 
-![Root Flag boiiii](/HTB3SecNotes/pic9.png)
+![Root Flag boiiii](/Images/HTB3SecNotes/pic9.png)
 
 Thanks for coming with me on this little adventure!!  More to come soon! :D
