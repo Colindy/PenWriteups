@@ -63,7 +63,7 @@ So with this, I just put the script into the console, fireup netcat to listen on
 
 `nc -nvlp 8044`
 
-![whoami](\Images\HTB4Jeeves\pic3.png)
+![whoami](/Images/HTB4Jeeves/pic3.png)
 
 Looks like I'm this kohsuke user.  Quick directory move over to this user's desktop and grab the user flag.  Score there.  And then back to the original directory and let's work on getting elevated to root and getting that flag.
 
