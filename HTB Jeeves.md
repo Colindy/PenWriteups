@@ -95,17 +95,17 @@ So we have our shell on a basic user.  Time to elevate.  Fire up Metasploit for 
 
 `use exploit/multi/script/web_delivery`
 
-![msf exploit](\Images\HTB4Jeeves\pic4.png)
+![msf exploit](/Images/HTB4Jeeves/pic4.png)
 
 Run that and it should spit out a powershell command to copy and paste into the shell session we have on the target.  Run that it you should get the session.  No need to start a listener since we're using Metasploit cause it does all that for us.
 
-![msf session](\Images\HTB4Jeeves\pic5.png)
+![msf session](/Images/HTB4Jeeves/pic5.png)
 
 Now that we have our session, we can do some more things.  Do an exploit checker to see what's vulnerable for one.
 
 `meterpreter > run post/multi/recon/local_exploit_suggester`
 
-![Exploit Check](\Images\HTB4Jeeves\pic6.png)
+![Exploit Check](/Images/HTB4Jeeves/pic6.png)
 
 Looks like we have a decent number of vulnerabilities.  If this were a live pentest, I'm sure all of these would be tested for and checked/reported.  The one we're interested in for this box though is the reflection_juicy one.  This is the potato or token impersonation vulnerability.
 
@@ -119,7 +119,7 @@ msf6 exploit(multi/script/web_delivery) > use exploit/windows/local/ms16_075_ref
 msf6 exploit(windows/local/ms16_075_reflection) > show options
 ```
 
-![Exploit Options](\Images\HTB4Jeeves\pic7.png)
+![Exploit Options](/Images/HTB4Jeeves/pic7.png)
 
 So, at this point, I hit a snag following along with the video.  I could not, for the life of me, get the potato attack to work right.  I kept getting errors about the arch type and config were not matching.  It came down to the fact that I was trying to use an x86 version of meterpreter session with an x64 exploit.  So I went looking for a different way to crack this box.  I ended up finding a pretty solid way too.
 
@@ -172,11 +172,11 @@ Using the following command, I was able to get this password extracted.
 
 `john CEHtohack -w:/usr/share/wordlists/rockyou.txt`
 
-![John Output](\Images\HTB4Jeeves\pic8.png)
+![John Output](/Images/HTB4Jeeves/pic8.png)
 
 Then go install KeePass on my device and use the extracted password to open the keepass db.  And wouldn't you know it, there's an administrator password hash in there.  Grab that use it along with `pth-winexe` in order to get an elevated connection to the device.
 
-![Elevated](\Images\HTB4Jeeves\pic9.png)
+![Elevated](/Images/HTB4Jeeves/pic9.png)
 
 ```
 C:\Users\Administrator>cd desktop
@@ -224,7 +224,7 @@ Ahh, an alternate data stream showing up on the .txt file.
 
 `more < hm.txt:root.txt:$DATA`
 
-![Root](\Images\HTB4Jeeves\pic10.png)
+![Root](/Images/HTB4Jeeves/pic10.png)
 
 And there's our wonderful root flag.  While we didn't really get NT / SYSTEM AUTHORITY, we did get an Administrator (which served our purpose here just fine).  Wish the potato route would have worked but I get the understanding behind it.  I also have my notes from the videos on how to run that if I need to come back to it.
 
