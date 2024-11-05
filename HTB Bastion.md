@@ -188,6 +188,8 @@ Following the guided mode on HTB, it looks like we're looking for the file that 
 
 ![nRemoteNG](/Images/HTB8Bastion/pic7.png)
 
+![type command](/Images/HTB8Bastion/pic11.png)
+
 I then took the contents of that file and copied it into a seperate file and used a tool called mRemoteNG-Decrypt and tried to do the file but that didn't work.  On the github there's an option for a string.  So I tried that way and looks like we got it going.  We can take the password part of the xml file and run it through the same program.
 
 ![xmlfile](/Images/HTB8Bastion/pic8.png)  
