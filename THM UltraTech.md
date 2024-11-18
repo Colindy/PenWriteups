@@ -86,7 +86,7 @@ Now that we've got a foothold, upload linpeas.sh and run that and almost immedia
 
 Go check gtfobins and we see the command here.
 
-`CONTAINER_ID="$(docker run -d alpine)"` 
+`docker run -v /:/mnt --rm -it alpine chroot /mnt sh` 
 
 We change it though cause we're not running alpine, we want to run bash.
 
